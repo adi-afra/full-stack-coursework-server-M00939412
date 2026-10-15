@@ -3,6 +3,8 @@ var app = express();
 var cors = require("cors");
 app.use(cors());
 
+
+
 app.use(function (request, response) {
     //console.log("In comes a request to: " + request.url);
     //response.end("Hello, world!");
