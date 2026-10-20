@@ -1,6 +1,10 @@
 var express = require("express");
+var path = require("path"); 
+
 var app = express();
 var cors = require("cors");
+var publicPath = path.resolve(__dirname, "staticFiles"); 
+
 app.use(cors());
 
 let products = [
@@ -79,6 +83,9 @@ app.use(function (request, response, next) {
 app.get("/courses", function (req, res) {
     res.json(products)
 });
+
+//send static files 
+app.use("/images", express.static(publicPath));
 
 //Error in case an unkown request comes in
 app.use(function (request, response) {
