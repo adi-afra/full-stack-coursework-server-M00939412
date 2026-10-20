@@ -18,7 +18,7 @@ let products = [
         availability: 2,
 
         image: {
-            src: 'images/math.jpg',
+            src: 'http://localhost:3000/images/math.jpg',
             alt: 'Mathematics course'
         }
     },
@@ -34,7 +34,7 @@ let products = [
         availability: 100,
 
         image: {
-            src: 'images/physics.jpg',
+            src: 'http://localhost:3000/images/physics.jpg',
             alt: 'Physics course'
         }
     },
@@ -50,7 +50,7 @@ let products = [
         availability: 100,
 
         image: {
-            src: 'images/chemistry.jpg',
+            src: 'http://localhost:3000/images/chemistry.jpg',
             alt: 'Chemistry course'
         }
     },
@@ -66,7 +66,7 @@ let products = [
         availability: 100,
 
         image: {
-            src: 'images/computer.jpg',
+            src: 'http://localhost:3000/images/computer.jpg',
             alt: 'Computer science course'
         }
     }
