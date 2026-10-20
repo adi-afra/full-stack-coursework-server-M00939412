@@ -69,16 +69,16 @@ let products = [
 
 ];
 
-// GET requests that send all of the courses
-app.get("/courses", function(req, res) {
-    res.json(products)
+// logger that console log the api request coming 
+app.use(function (request, response, next) {
+    console.log("Incoming " + request.method + " request");
+    next();
 });
 
-// logger that console log the api request coming 
-app.use(function(request, response, next) {     
-console.log("Incoming " + request.method + " request"); 
-next(); 
-}); 
+// GET requests that send all of the courses
+app.get("/courses", function (req, res) {
+    res.json(products)
+});
 
 //Error in case an unkown request comes in
 app.use(function (request, response) {
