@@ -76,7 +76,7 @@ let products = [
 
 // logger that console log the api request coming 
 app.use(function (request, response, next) {
-    console.log("Incoming " + request.method + " request");
+    console.log("Incoming " + request.method + " request on " + request.url);
     next();
 });
 
