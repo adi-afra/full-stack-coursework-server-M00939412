@@ -1,11 +1,12 @@
 var express = require("express");
-var path = require("path"); 
+var path = require("path");
 
 var app = express();
 var cors = require("cors");
-var publicPath = path.resolve(__dirname, "staticFiles"); 
+var publicPath = path.resolve(__dirname, "staticFiles");
 
 app.use(cors());
+app.use(express.json()); 
 
 let products = [
     {
@@ -82,6 +83,15 @@ app.use(function (request, response, next) {
 // GET requests that send all of the courses
 app.get("/courses", function (req, res) {
     res.json(products)
+});
+
+app.post("/order", function (req, res) {
+    var body = req.body;
+    console.log(body);
+    console.log("New Name Recieved: " + body.name + " " +
+        body.number);
+    res.json("New Name Recieved: " + body.name + " " +
+        body.number);
 });
 
 //send static files 
