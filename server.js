@@ -8,71 +8,14 @@ var publicPath = path.resolve(__dirname, "staticFiles");
 app.use(cors());
 app.use(express.json());
 
-let products = [
-    {
-        id: 1,
-        subject: 'Math',
-        title: 'Mathematics Course',
-        description: 'Learn mathematics through clear explanations, examples, and practical exercises.',
-        location: 'London',
-        price: 100,
-        availability: 2,
+//connection to database
+require("dotenv").config({ path: "config.env" });
+const { MongoClient } = require("mongodb");
+const uri = process.env.MONGODB_PREFIX + process.env.MONGODB_USERNAME + ":" +
+    process.env.MONGODB_PASSWORD + process.env.MONGODB_URL;
+const client = new MongoClient(uri);
+const db = client.db("after_school_db");
 
-        image: {
-            src: 'http://localhost:3000/images/math.jpg',
-            alt: 'Mathematics course'
-        }
-    },
-
-
-    {
-        id: 2,
-        subject: 'Physics',
-        title: 'Physics Course',
-        description: 'Learn the fundamentals of physics and understand how the world around us works.',
-        location: 'London',
-        price: 120,
-        availability: 100,
-
-        image: {
-            src: 'http://localhost:3000/images/physics.jpg',
-            alt: 'Physics course'
-        }
-    },
-
-
-    {
-        id: 3,
-        subject: 'Chemistry',
-        title: 'Chemistry Course',
-        description: 'Explore atoms, molecules, reactions, and the fundamentals of chemistry.',
-        location: 'Manchester',
-        price: 90,
-        availability: 100,
-
-        image: {
-            src: 'http://localhost:3000/images/chemistry.jpg',
-            alt: 'Chemistry course'
-        }
-    },
-
-
-    {
-        id: 4,
-        subject: 'Computer Science',
-        title: 'Computer Science Course',
-        description: 'Learn programming, algorithms, data structures, and computer science fundamentals.',
-        location: 'Birmingham',
-        price: 150,
-        availability: 100,
-
-        image: {
-            src: 'http://localhost:3000/images/computer.jpg',
-            alt: 'Computer science course'
-        }
-    }
-
-];
 
 // logger that console log the api request coming 
 app.use(function (request, response, next) {
@@ -81,8 +24,10 @@ app.use(function (request, response, next) {
 });
 
 // GET requests that send all of the courses
-app.get("/courses", function (req, res) {
-    res.json(products)
+app.get("/courses", async function (req, res) {
+    let collection = await db.collection("Lessons");
+    let results = await collection.find({}).toArray();
+    res.send(results);
 });
 
 //post request that for now logs the infromation of a user and the courses they checked out with
