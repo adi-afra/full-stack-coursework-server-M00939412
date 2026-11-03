@@ -39,6 +39,21 @@ app.post("/order", async function (req, res) {
     res.send(result);
 });
 
+app.put("/courses/:_id", async function(req, res) { 
+ 
+    var body = req.body; 
+    let collection = await db.collection("lessons"); 
+    let tempid = req.params._id; 
+     
+    const query = { _id: new ObjectId(tempid) }; 
+    const updates = { 
+      $set: req.body 
+    }; 
+    result = await collection.updateOne(query, updates); 
+    res.send(result); 
+    console.log(result); 
+}); 
+
 //send static files 
 app.use("/images", express.static(publicPath));
 
