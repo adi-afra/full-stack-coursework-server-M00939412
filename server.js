@@ -6,7 +6,7 @@ var cors = require("cors");
 var publicPath = path.resolve(__dirname, "staticFiles");
 
 app.use(cors());
-app.use(express.json()); 
+app.use(express.json());
 
 let products = [
     {
@@ -85,6 +85,7 @@ app.get("/courses", function (req, res) {
     res.json(products)
 });
 
+//post request that for now logs the infromation of a user and the courses they checked out with
 app.post("/order", function (req, res) {
     var body = req.body;
     console.log(body);
