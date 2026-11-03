@@ -31,13 +31,12 @@ app.get("/courses", async function (req, res) {
 });
 
 //post request that for now logs the infromation of a user and the courses they checked out with
-app.post("/order", function (req, res) {
+app.post("/order", async function (req, res) {
     var body = req.body;
-    console.log(body);
-    console.log("New Name Recieved: " + body.name + " " +
-        body.number);
-    res.json("New Name Recieved: " + body.name + " " +
-        body.number);
+    console.log(body)
+    let collection = await db.collection("Orders");
+    let result = await collection.insertOne(body);
+    res.send(result);
 });
 
 //send static files 
