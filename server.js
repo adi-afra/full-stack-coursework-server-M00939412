@@ -17,7 +17,7 @@ const uri = process.env.MONGODB_PREFIX + process.env.MONGODB_USERNAME + ":" +
 const client = new MongoClient(uri);
 const db = client.db("after_school_db");
 
-
+const port = process.env.PORT||3000; 
 // logger that console log the api request coming 
 app.use(function (request, response, next) {
     console.log("Incoming " + request.method + " request on " + request.url);
@@ -64,6 +64,6 @@ app.use(function (request, response) {
     response.status(404).send("Page not found!");
 });
 
-app.listen(3000, function () {
+app.listen(port, function () {
     console.log("App started on port 3000");
 }); 
