@@ -49,7 +49,7 @@ app.put("/courses/:_id", async function(req, res) {
      
     const query = { _id: new ObjectId(tempid) }; 
     const updates = { 
-      $inc: req.body 
+      $set: req.body 
     }; 
     result = await collection.updateOne(query, updates); 
     res.send(result); 
