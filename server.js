@@ -31,7 +31,7 @@ app.get("/courses", async function (req, res) {
     res.send(results);
 });
 
-//post request that for now logs the infromation of a user and the courses they checked out with
+//POST request that for now logs the infromation of a user and the courses they checked out with
 app.post("/order", async function (req, res) {
     var body = req.body;
     console.log(body)
@@ -40,12 +40,12 @@ app.post("/order", async function (req, res) {
     res.send(result);
 });
 
+// PUT request to chnage a lesson (incerment a integer field)
 app.put("/courses/:_id", async function(req, res) { 
  
     var body = req.body; 
     let collection = await db.collection("Lessons"); 
     let tempid = req.params._id; 
-    console.log(tempid);
      
     const query = { _id: new ObjectId(tempid) }; 
     const updates = { 
@@ -55,6 +55,18 @@ app.put("/courses/:_id", async function(req, res) {
     res.send(result); 
     console.log(result); 
 }); 
+
+// GET request to send the enrolled number of a lesson based on the _id of the lesson
+app.get("/enrolment/:_id", async function(req, res) {
+    let collection = await db.collection("Lessons");
+
+    let tempid = req.params._id; 
+    const query = { _id: new ObjectId(tempid) }; 
+
+    let result = await collection.find(query).toArray();
+    res.send(result[0].enrolled);
+
+});
 
 //send static files 
 app.use("/images", express.static(publicPath));
