@@ -17,7 +17,7 @@ const uri = process.env.MONGODB_PREFIX + process.env.MONGODB_USERNAME + ":" +
 const client = new MongoClient(uri);
 const db = client.db("after_school_db");
 
-const port = process.env.PORT||3000; 
+const port = process.env.PORT || 3000;
 // logger that console log the api request coming 
 app.use(function (request, response, next) {
     console.log("Incoming " + request.method + " request on " + request.url);
@@ -40,28 +40,36 @@ app.post("/order", async function (req, res) {
     res.send(result);
 });
 
+app.delete("/order/:_id", async function (req, res) {
+    const query = { _id: new ObjectId(req.params._id) };
+    const collection = db.collection("Orders");
+    let result = await collection.deleteOne(query);
+    console.log(result);
+    res.send(result).status(200);
+});
+
 // PUT request to chnage a lesson (incerment a integer field)
-app.put("/courses/:_id", async function(req, res) { 
- 
-    var body = req.body; 
-    let collection = await db.collection("Lessons"); 
-    let tempid = req.params._id; 
-     
-    const query = { _id: new ObjectId(tempid) }; 
-    const updates = { 
-      $set: req.body 
-    }; 
-    result = await collection.updateOne(query, updates); 
-    res.send(result); 
-    console.log(result); 
-}); 
+app.put("/courses/:_id", async function (req, res) {
+
+    var body = req.body;
+    let collection = await db.collection("Lessons");
+    let tempid = req.params._id;
+
+    const query = { _id: new ObjectId(tempid) };
+    const updates = {
+        $set: req.body
+    };
+    result = await collection.updateOne(query, updates);
+    res.send(result);
+    console.log(result);
+});
 
 // GET request to send the enrolled number of a lesson based on the _id of the lesson
-app.get("/enrolment/:_id", async function(req, res) {
+app.get("/enrolment/:_id", async function (req, res) {
     let collection = await db.collection("Lessons");
 
-    let tempid = req.params._id; 
-    const query = { _id: new ObjectId(tempid) }; 
+    let tempid = req.params._id;
+    const query = { _id: new ObjectId(tempid) };
 
     let result = await collection.find(query).toArray();
     res.send(result[0].enrolled);
